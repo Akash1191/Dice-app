@@ -1,100 +1,84 @@
+
 import 'package:flutter/material.dart';
+import 'dart:math';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(
-    MyApp(),
+    MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.green.shade900,
+        appBar: AppBar(
+          backgroundColor: Colors.green.shade900,
+          title: Text(
+            'Dice',
+            style: GoogleFonts.pacifico(
+              color: Colors.white,
+              fontSize: 28,
+            ),
+          ),
+        ),
+        body: DicePage(),
+      ),
+    ),
   );
 }
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
+class DicePage extends StatefulWidget {
+  const DicePage({super.key});
+
+  @override
+  State<DicePage> createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  var dicenumber = 1;
+
+  void rollDice() {
+    setState(() {
+      dicenumber = Random().nextInt(6) + 1; // Generates a random number between 1 and 6
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.deepPurple,
-        body:SafeArea(
-          child:Column(
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(padding:EdgeInsets.fromLTRB(25, 25, 25, 25),),
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: NetworkImage('https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/14582818/2024/6/8/ddf8646d-b33b-4cfc-8c47-b00d7a002a221717819948985-Voyage-Unisex-Black-Lens-Oval-Sunglasses-with-UV-Protected-L-1.jpg'),
-                
-              ),
-              Text('Akash Chandra',style: TextStyle(
-                fontSize: 40,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Pacifico'
-
-              ),),
-              Text('FLUTTER DEVELOPER',style:
-                TextStyle(
-                  color: Colors.deepPurple.shade50,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 3,
-
-                ),),
-              Card(
-                margin: EdgeInsets.all(15),
-                color: Colors.white,
-                child: Row(
-                  children: [
-                    Padding(padding:EdgeInsets.fromLTRB(25, 25, 25, 25),),
-                    Icon(
-                      Icons.phone,
-                      color: Colors.deepPurple,
+              Container(
+                height: 150,
+                width: 150,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.green.shade900,
+                  ),
+                  onPressed: () {
+                    rollDice();
+                    print('$dicenumber button pressed');
+                  },
+                  child: Center(
+                    child: Image(
+                      image: AssetImage('images/dice$dicenumber.jpg'),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text('+91 977801191',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.deepPurple,
-
-                    ),),
-
-
-                  ],
+                  ),
                 ),
-
-
-              ),
-              Card(
-                margin: EdgeInsets.all(15),
-                color: Colors.white,
-                child: Row(
-                  children: [
-                    Padding(padding:EdgeInsets.fromLTRB(25, 25, 25, 25),)
-                    Icon(
-                      Icons.email,
-                      color: Colors.deepPurple,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text('akashchandra@gmail.com',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.deepPurple,
-
-                      ),),
-
-
-                  ],
-                ),
-
-
               ),
             ],
-          )
-        ),
+          ),
+          SizedBox(height: 20), // Add some space between the dice and the text
+          Text(
+            'Your value is $dicenumber',
+            style: GoogleFonts.pacifico(
+              color: Colors.white,
+              fontSize: 24,
+            ),
+          ),
+        ],
       ),
     );
   }
 }
-
-
